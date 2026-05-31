@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "testpy"
-version = "0.1.0"
+version = "0.1.1"
 description = "Terminal-based test workspace for running and managing tests across multiple languages and testing frameworks."
 readme = "README.md"
 license = { text = "Apache-2.0" }

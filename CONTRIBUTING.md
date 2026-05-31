@@ -1,57 +1,44 @@
 # Contributing
 
-Thank you for your interest in contributing to Testpy.
+Thanks for helping improve Testpy.
 
-## Reporting Issues
+## Before you open an issue
 
-When reporting a bug, please include:
+Please include:
+- operating system
+- Python version
+- Testpy version
+- steps to reproduce
+- expected behavior
+- actual behavior
 
-* Operating system
-* Python version
-* Testpy version
-* Steps to reproduce
-* Expected behavior
-* Actual behavior
-
-## Development Setup
+## Development setup
 
 ```bash
-git clone https://github.com/<username>/Testpy.git
+git clone https://github.com/Akkiraj1234/Testpy.git
 cd Testpy
-
 poetry install
 ```
 
-Run:
+## Useful commands
 
 ```bash
 poetry run pytest
 poetry run testpy
+poetry build
 ```
 
-If you want the wrapper commands used in automation, you can also run:
+## Pull requests
 
-```bash
-make test
-make build
-```
+- keep changes focused
+- add tests when logic changes
+- update docs when user-facing behavior changes
+- keep the code style consistent
 
-## Pull Requests
+## Project philosophy
 
-Before opening a pull request:
-
-* Keep changes focused and small.
-* Add documentation when needed.
-* Follow existing code style.
-* Test changes locally.
-
-## Philosophy
-
-Testpy aims to provide a simple and fast terminal interface for test execution.
-
-Features should prioritize:
-
-* Simplicity
-* Performance
-* Predictability
-* Keyboard-driven workflows
+Testpy should stay:
+- simple
+- fast
+- predictable
+- keyboard friendly

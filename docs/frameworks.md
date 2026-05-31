@@ -1,47 +1,28 @@
 # Supported Frameworks
 
-Testpy currently supports the following testing frameworks.
+Testpy currently supports these frameworks:
 
-| Language   | Framework |
-| ---------- | --------- |
-| Python     | pytest    |
-| JavaScript | Jest      |
-| C / C++    | Criterion |
+| Language | Framework |
+| --- | --- |
+| Python | pytest |
+| JavaScript | Jest |
+| C / C++ | Criterion |
 
-## Version Compatibility
+## Version compatibility
 
-Framework output parsing is version dependent.
+Framework parsing is version-sensitive, so supported versions should be documented as adapters are added.
 
-Supported versions will be documented here as parser implementations are completed.
+## V1 target
 
-### Python
+- pytest
+- Jest
+- Criterion
 
-* pytest
+## Future support
 
-### JavaScript
-
-* Jest
-
-### C / C++
-
-* Criterion
-
-## Planned Support
-
-### Python
-
-* unittest
-
-### JavaScript
-
-* Vitest
-
-### C / C++
-
-* GoogleTest
-* Catch2
-
-### Future
-
-* Rust (`cargo test`)
-* Go (`go test`)
+- unittest
+- Vitest
+- GoogleTest
+- Catch2
+- Rust `cargo test`
+- Go `go test`

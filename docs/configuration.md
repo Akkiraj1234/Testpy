@@ -1,6 +1,6 @@
 # Configuration
 
-Testpy searches for a `testpy.toml` file starting from the current working directory and walking upward through parent directories up to level 5.
+Testpy looks for `testpy.toml` starting from the current directory and walks upward through parent directories up to depth 5.
 
 ## Example
 
@@ -20,54 +20,37 @@ directory = "./tests"
 ## Options
 
 ### theme
-
 Type: string
 
-```toml
-theme = "dark"
-```
+Controls the color/theme preset used by the UI.
 
 ### ui.border
-
 Type: boolean
 
-```toml
-[ui]
-border = true
-```
+Enables or disables window borders.
 
 ### ui.padding
-
 Type: integer
 
-```toml
-[ui]
-padding = 2
-```
+Controls inner spacing for UI windows.
 
 ### ui.window_margin_x
-
 Type: integer
 
-```toml
-[ui]
-window_margin_x = 3
-```
+Horizontal outer margin.
 
 ### ui.window_margin_y
-
 Type: integer
 
-```toml
-[ui]
-window_margin_y = 1
-```
+Vertical outer margin.
 
 ### test.directory
-
 Type: string
 
-```toml
-[test]
-directory = "./tests"
-```
+Directory that Testpy should scan for tests.
+
+## Config behavior
+
+- Missing config should be created in the current working directory.
+- Defaults should be merged with user settings.
+- Nested tables should merge recursively.

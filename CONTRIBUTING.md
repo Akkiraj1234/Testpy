@@ -19,13 +19,21 @@ When reporting a bug, please include:
 git clone https://github.com/<username>/Testpy.git
 cd Testpy
 
-pip install -e .
+poetry install
 ```
 
 Run:
 
 ```bash
-testpy
+poetry run pytest
+poetry run testpy
+```
+
+If you want the wrapper commands used in automation, you can also run:
+
+```bash
+make test
+make build
 ```
 
 ## Pull Requests

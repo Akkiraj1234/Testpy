@@ -1,0 +1,65 @@
+[build-system]
+requires = ["poetry-core>=1.9.0"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
+name = "testpy"
+version = "0.1.0"
+description = "Terminal-based test workspace for running and managing tests across multiple languages and testing frameworks."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+
+authors = [
+{ name = "Akhand Raj" }
+]
+
+keywords = [
+"curses",
+"terminal",
+"tui",
+"testing",
+"pytest",
+]
+
+classifiers = [
+"Development Status :: 3 - Alpha",
+"Environment :: Console :: Curses",
+"Intended Audience :: Developers",
+"License :: OSI Approved :: Apache Software License",
+"Programming Language :: Python :: 3",
+"Programming Language :: Python :: 3.11",
+"Programming Language :: Python :: 3.12",
+"Topic :: Software Development :: Testing",
+"Topic :: Terminals",
+]
+
+requires-python = ">=3.11,<4.0"
+
+dependencies = [
+"rich>=15.0.0,<16.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Akkiraj1234/Testpy"
+Repository = "https://github.com/Akkiraj1234/Testpy"
+Issues = "https://github.com/Akkiraj1234/Testpy/issues"
+
+[project.scripts]
+testpy = "testpy.cli:main"
+
+[tool.poetry]
+packages = [
+{ include = "testpy", from = "src" }
+]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+ruff = "^0.5"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+

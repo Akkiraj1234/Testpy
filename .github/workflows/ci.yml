@@ -2,10 +2,8 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
-
-  pull_request:
+    tags:
+      - "v*"
 
 jobs:
   test:
@@ -22,6 +20,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - run: pip install pipx
       - run: pipx install poetry
       - run: poetry install
       - run: poetry run pytest

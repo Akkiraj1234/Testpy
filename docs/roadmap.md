@@ -11,9 +11,9 @@ Initial supported frameworks:
 Goal: make the application start reliably and keep the core logic testable.
 
 ### Must finish first
-- [ ] App starts without crashing
-- [ ] `main()` / `run()` exit cleanly
-- [ ] KeyboardInterrupt is handled at the top level
+- [x] App starts without crashing
+- [x] `main()` / `run()` exit cleanly
+- [x] KeyboardInterrupt is handled at the top level
 - [ ] Config loading works
 - [ ] Config creation works when no config exists
 - [ ] Config merge behavior is tested

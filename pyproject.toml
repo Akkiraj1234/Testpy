@@ -59,8 +59,8 @@ ruff = "^0.5"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src"]
 
 [tool.ruff]
 line-length = 88
 target-version = "py311"
-

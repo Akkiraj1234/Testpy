@@ -1,0 +1,9 @@
+theme = "dark"
+refresh_rate = 60
+TEST_DIR = "./test/"
+
+[ui]
+border = true
+padding = 2
+window_margin_y = 1
+window_margin_x = 3

@@ -14,25 +14,25 @@ Goal: make the application start reliably and keep the core logic testable.
 - [x] App starts without crashing
 - [x] `main()` / `run()` exit cleanly
 - [x] KeyboardInterrupt is handled at the top level
-- [ ] Config loading works
-- [ ] Config creation works when no config exists
-- [ ] Config merge behavior is tested
-- [ ] CLI arguments are parsed
-- [ ] Version flag works
+- [x] Config loading works
+- [x] Config creation works when no config exists
+- [x] Config merge behavior is tested
+- [x] CLI arguments are parsed 
+- [x] Version flag works
 
 ### Tests
-- [ ] `merge_dicts()` merges nested dictionaries correctly
-- [ ] `find_config()` finds config in the current directory
-- [ ] `find_config()` walks upward correctly
-- [ ] `find_config()` stops after the maximum search depth
-- [ ] `find_config()` creates a default config when missing
-- [ ] CLI argument parsing is correct
-- [ ] CLI error handling returns safe exit codes
+- [x] `merge_dicts()` merges nested dictionaries correctly
+- [x] `find_config()` finds config in the current directory
+- [x] `find_config()` walks upward correctly
+- [x] `find_config()` stops after the maximum search depth
+- [x] `find_config()` creates a default config when missing
+- [x] CLI argument parsing is correct
+- [x] CLI error handling returns safe exit codes
 
 ### CI / packaging
-- [ ] Poetry build works
-- [ ] Wheel build works
-- [ ] GitHub Actions runs tests
+- [x] Poetry build works
+- [x] Wheel build works
+- [x] GitHub Actions runs tests
 - [ ] GitHub Actions builds the package
 
 Release target:
@@ -42,9 +42,9 @@ Release target:
 Goal: keyboard-driven control before full test discovery.
 
 ### Must have
-- [ ] `:` opens command mode
-- [ ] `Esc` exits command mode
-- [ ] command buffer editing
+- [x] `:` opens command mode
+- [x] `Esc` exits command mode
+- [x] command buffer editing
 - [ ] command history
 - [ ] help screen
 - [ ] reload config/project

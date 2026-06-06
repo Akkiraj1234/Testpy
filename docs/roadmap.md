@@ -63,11 +63,11 @@ Release target:
 Goal: the three-panel layout works.
 
 ### Must have
-- [ ] Explorer window
-- [ ] Output window
-- [ ] Command window
-- [ ] Resize handling
-- [ ] Minimum terminal size handling
+- [x] Explorer window
+- [x] Output window
+- [x] Command window
+- [x] Resize handling
+- [x] Minimum terminal size handling
 - [ ] Cursor movement in the explorer
 - [ ] selection state
 - [ ] help overlay or help window

@@ -28,7 +28,7 @@ def run() -> int:
         headless.wrapper(app.run)
     else:
         curses.wrapper(app.run)
-
+    
     return 0
 
 

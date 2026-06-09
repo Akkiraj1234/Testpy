@@ -1,6 +1,7 @@
 from testpy.args import parse_args
 import pytest
 
+
 def test_default_args(monkeypatch):
     
     # running with no argument
@@ -15,8 +16,6 @@ def test_default_args(monkeypatch):
     assert args.run_failed is False
     assert args.discover is False
     assert args.config is None
-    # not working
-    # assert isinstance(args.VERSION, str)
     
 
 def test_no_cli_flag(monkeypatch):

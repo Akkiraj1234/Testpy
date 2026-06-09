@@ -3,6 +3,7 @@
     "Akhand",
     "pytest",
     "setuptools",
+    "stdscr",
     "testpaths",
     "testpy",
     "virtualenvs"

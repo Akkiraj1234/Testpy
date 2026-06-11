@@ -1,6 +1,11 @@
 {
   "cSpell.words": [
+    "addstr",
     "Akhand",
+    "doupdate",
+    "getch",
+    "getmaxyx",
+    "noutrefresh",
     "pytest",
     "setuptools",
     "stdscr",

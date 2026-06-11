@@ -53,7 +53,7 @@ class TestpyWindow:
         self._setup_terminal()
         self._create_windows()
         self.set_layout()
-
+    
     def _setup_terminal(self) -> None:
         self.stdscr.keypad(True)
         self.stdscr.timeout(16)
@@ -295,7 +295,7 @@ class TestpyWindow:
                 self.command.move(1, cursor_x)
             except curses.error:
                 pass
-
+    
     def _draw_lines(self, window: curses.window, lines: list[str]) -> None:
         height, width = window.getmaxyx()
         usable_width = max(width - 4, 0)

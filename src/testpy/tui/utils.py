@@ -1,5 +1,8 @@
+from __future__ import annotations
 from enum import IntEnum
 import curses
+import os
+import sys
 
 
 class MatchGroup:
@@ -162,3 +165,27 @@ def draw_panel(window: curses.window, title: str) -> None:
         safe_addstr(window, row, width - 1, "│", border_style)
 
     safe_addstr(window, 0, 2, title[: max(width - 4, 0)], title_style)
+    
+
+def can_run_tui() -> bool:
+    """
+    Return True if curses can be safely initialized.
+    """
+
+    if not sys.stdin.isatty():
+        return False
+
+    if not sys.stdout.isatty():
+        return False
+
+    term = os.environ.get("TERM")
+
+    if not term or term == "dumb":
+        return False
+
+    try:
+        curses.setupterm()
+    except Exception:
+        return False
+
+    return True

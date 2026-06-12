@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import Dict
+from queue import Queue
 
 from .utils import (
     MIN_WINDOW_HEIGHT,
@@ -98,7 +99,12 @@ class Tui:
     processing.
     """
 
-    def __init__(self, stdscr: curses.window) -> None:
+    def __init__(
+        self, 
+        event_bus: Queue,
+        stdscr: curses.window
+    ) -> None:
+        self.event_bus = event_bus
         self.stdscr = stdscr
         self.height = 0
         self.width = 0

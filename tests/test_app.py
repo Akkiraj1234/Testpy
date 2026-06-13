@@ -154,7 +154,85 @@ def test_run_uses_headless(monkeypatch):
     assert called["headless_called"]
     assert called["thread_started"]
     assert called["thread_joined"]
-    
+
+def test_run_falls_back_to_headless_when_tui_unavailable(monkeypatch):
+    called = {}
+
+    class FakeArgs:
+        no_cli = False
+
+    class FakeApp:
+        def __init__(
+            self,
+            config,
+            args,
+            event_bus,
+        ):
+            pass
+
+        def run(self):
+            pass
+
+        def stop(self):
+            pass
+
+    class FakeHeadless:
+        def __init__(self, event_bus):
+            pass
+
+        def run(self):
+            called["headless_called"] = True
+
+    class FakeThread:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def start(self):
+            pass
+
+        def join(self, timeout=None):
+            pass
+
+    monkeypatch.setattr(
+        testpy.cli,
+        "parse_args",
+        lambda: FakeArgs(),
+    )
+
+    monkeypatch.setattr(
+        testpy.cli,
+        "find_config",
+        lambda: {},
+    )
+
+    monkeypatch.setattr(
+        testpy.cli,
+        "can_run_tui",
+        lambda: False,
+    )
+
+    monkeypatch.setattr(
+        testpy.cli,
+        "TestpyApp",
+        FakeApp,
+    )
+
+    monkeypatch.setattr(
+        testpy.cli,
+        "Headless",
+        FakeHeadless,
+    )
+
+    monkeypatch.setattr(
+        testpy.cli.threading,
+        "Thread",
+        FakeThread,
+    )
+
+    result = testpy.cli.run()
+
+    assert result == 0
+    assert called["headless_called"]
     
 def test_main_keyboard_interrupt(monkeypatch):
     
@@ -201,3 +279,109 @@ def test_main_success(monkeypatch):
         testpy.cli.main()
 
     assert exc.value.code == 0
+
+
+def test_main_testpy_error(monkeypatch):
+    def fake_run():
+        raise testpy.cli.TestpyError("boom")
+
+    monkeypatch.setattr(
+        testpy.cli,
+        "run",
+        fake_run,
+    )
+
+    with pytest.raises(SystemExit) as exc:
+        testpy.cli.main()
+
+    assert exc.value.code == 1
+
+
+def test_run_stops_app(monkeypatch):
+    called = {}
+
+    class FakeArgs:
+        no_cli = True
+
+    class FakeApp:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def run(self):
+            pass
+
+        def stop(self):
+            called["stop"] = True
+
+
+def test_run_calls_app_stop(monkeypatch):
+    called = {}
+
+    class FakeArgs:
+        no_cli = True
+
+    class FakeApp:
+        def __init__(
+            self,
+            config,
+            args,
+            event_bus,
+        ):
+            pass
+
+        def run(self):
+            pass
+
+        def stop(self):
+            called["stop_called"] = True
+
+    class FakeHeadless:
+        def __init__(self, event_bus):
+            pass
+
+        def run(self):
+            pass
+
+    class FakeThread:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def start(self):
+            pass
+
+        def join(self, timeout=None):
+            pass
+
+    monkeypatch.setattr(
+        testpy.cli,
+        "parse_args",
+        lambda: FakeArgs(),
+    )
+
+    monkeypatch.setattr(
+        testpy.cli,
+        "find_config",
+        lambda: {},
+    )
+
+    monkeypatch.setattr(
+        testpy.cli,
+        "TestpyApp",
+        FakeApp,
+    )
+
+    monkeypatch.setattr(
+        testpy.cli,
+        "Headless",
+        FakeHeadless,
+    )
+
+    monkeypatch.setattr(
+        testpy.cli.threading,
+        "Thread",
+        FakeThread,
+    )
+
+    testpy.cli.run()
+
+    assert called["stop_called"]

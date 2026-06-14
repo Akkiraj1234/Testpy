@@ -23,6 +23,68 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "TEST_DIR": "./test/",
 }
 
+DEFAULT_TOML = """
+[app]
+TEST_DIR = "./test/"
+
+[style]
+theme = "tokyo-night"
+border = true
+padding = 2
+window_margin_y = 1
+window_margin_x = 3
+refresh_rate = 60
+
+
+[custom.Theme.dark-god]
+Text = None
+Text_Active = None
+Text_Inactive = None
+
+Border = None
+Border_Active = None
+Border_Inactive = None
+
+Main_Border = None
+Main_Border_Active = None
+Main_Border_Inactive = None
+
+H1 = None
+H1_Active = None
+H1_Inactive = None
+
+H2 = None
+H2_Active = None
+H2_Inactive = None
+
+Command = None
+Command_Active = None
+Command_Inactive = None
+
+Suggestion = None
+Suggestion_Active = None
+Suggestion_Inactive = None
+
+# Status messages
+Error = None
+Error_Active = None
+Error_Inactive = None
+
+Warning = None
+Warning_Active = None
+Warning_Inactive = None
+
+Success = None
+Success_Active = None
+Success_Inactive = None
+
+# Selection / focus
+Selected = None
+Focused = None
+Disabled = None
+"""
+
+
 def merge_dicts(defaults: dict[str, Any], user: dict[str, Any]) -> dict[str, Any]:
     """
     Recursively merge a user configuration into the default configuration.

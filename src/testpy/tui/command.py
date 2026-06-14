@@ -1,13 +1,15 @@
 from __future__ import annotations
+from .utils import (
+    Key, 
+    draw_panel, 
+    safe_addstr
+)
 
 import curses
 
-from .explore import get_test_dir
-from .output import append_output, clear_output, extend_output
-from .utils import Key, draw_panel, safe_addstr
-
 
 class Command:
+    
     def __init__(self, window: curses.window | None) -> None:
         self.window = window
         self.active = False

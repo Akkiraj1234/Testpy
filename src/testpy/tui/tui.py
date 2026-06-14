@@ -6,7 +6,7 @@ from .utils import (
     MIN_WINDOW_HEIGHT,
     MIN_WINDOW_WIDTH,
     safe_addstr,
-    Color,
+    set_color,
     Key
 )
 import curses
@@ -123,19 +123,10 @@ class Tui:
         self.stdscr.timeout(16)
 
         if not curses.has_colors():
+            self.has_colors = False
             return
 
-        curses.start_color()
-
-        try:
-            curses.use_default_colors()
-        except curses.error:
-            pass
-
-        curses.init_pair(Color.TITLE, curses.COLOR_CYAN, -1)
-        curses.init_pair(Color.TEXT, -1, -1)
-        curses.init_pair(Color.ERROR, curses.COLOR_RED, -1)
-        curses.init_pair(Color.BORDER, curses.COLOR_BLUE, -1)
+        set_color(None)
 
     
     def _setup_tui_app(self) -> None:

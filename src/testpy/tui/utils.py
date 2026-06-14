@@ -6,6 +6,8 @@ import sys
 
 
 class MatchGroup:
+    __slots__ = ("codes",)
+    
     def __init__(self, *codes):
         self.codes = codes
 
@@ -14,17 +16,58 @@ class MatchGroup:
 
     def __repr__(self):
         return f"KeyCode{self.codes}"
-    
+
 
 class Color(IntEnum):
     """
-    Curses color pair identifiers.
+    Requires curses color system to be initialized.
     """
-    SELECTED = 1
+
+    # Core UI
+    BORDER = 1
     TITLE = 2
     TEXT = 3
-    ERROR = 4
-    BORDER = 5
+    LINK = 4
+
+    # Status
+    ERROR = 5
+    WARNING = 6
+    SUCCESS = 7
+
+    # Theme / custom colors
+    ACCENT_1 = 8
+    ACCENT_2 = 9
+    ACCENT_3 = 10
+    ACCENT_4 = 11
+    ACCENT_5 = 12
+    ACCENT_6 = 13
+
+    @property
+    def attr(self) -> int:
+        return curses.color_pair(self)
+    
+    def __or__(self, attr: int) -> int:
+        return self.attr | attr
+
+
+class State:
+    """
+    Curses attribute modifiers.
+
+    Combine with Color using the bitwise OR operator.
+
+    Examples:
+        Color.PANEL | State.ACTIVE
+        Color.TITLE | State.FOCUSED
+        Color.ERROR | State.UNDERLINE
+    """
+    ACTIVE = curses.A_BOLD
+    INACTIVE = curses.A_DIM
+    FOCUSED = curses.A_REVERSE
+    
+    UNDERLINE = curses.A_UNDERLINE
+    BOLD = curses.A_BOLD
+    ITALIC = ITALIC = getattr(curses, "A_ITALIC", 0)
 
 
 class Key:
@@ -116,6 +159,31 @@ MIN_WINDOW_HEIGHT = 18
 MIN_WINDOW_WIDTH = 72
 
 
+def set_color(cls):
+    curses.start_color()
+    try:
+        curses.use_default_colors()
+    except curses.error:
+        pass
+    
+    curses.init_pair(Color.BORDER,  curses.COLOR_BLUE,    -1)
+    curses.init_pair(Color.TITLE,   curses.COLOR_CYAN,    -1)
+    curses.init_pair(Color.TEXT,    curses.COLOR_CYAN,    -1)
+    curses.init_pair(Color.LINK,    curses.COLOR_MAGENTA, -1)
+
+    curses.init_pair(Color.ERROR,   curses.COLOR_RED,     -1)
+    curses.init_pair(Color.WARNING, curses.COLOR_YELLOW,  -1)
+    curses.init_pair(Color.SUCCESS, curses.COLOR_GREEN,   -1)
+
+    curses.init_pair(Color.ACCENT_1, curses.COLOR_BLUE,    -1)
+    curses.init_pair(Color.ACCENT_2, curses.COLOR_CYAN,    -1)
+    curses.init_pair(Color.ACCENT_3, curses.COLOR_GREEN,   -1)
+    curses.init_pair(Color.ACCENT_4, curses.COLOR_YELLOW,  -1)
+    curses.init_pair(Color.ACCENT_5, curses.COLOR_MAGENTA, -1)
+    curses.init_pair(Color.ACCENT_6, curses.COLOR_RED,     -1)
+    
+
+
 def safe_addstr(
     window: curses.window,
     y: int,
@@ -134,37 +202,63 @@ def safe_addstr(
     except curses.error:
         pass
     
-    
-def draw_panel(window: curses.window, title: str) -> None:
-    """Draw a bordered panel with a title."""
-
+def draw_panel(
+    window: curses.window,
+    title: str,
+    active: bool = False,
+    has_color: bool = False,
+) -> None:
+    """
+    Draw a bordered panel with a title.
+    """
     height, width = window.getmaxyx()
 
     if height < 2 or width < 2:
         return
 
-    border_style = curses.A_DIM
-    title_style = curses.A_DIM | curses.A_BOLD
+    state = (
+        State.ACTIVE
+        if active
+        else State.INACTIVE
+    )
 
-    if curses.has_colors():
-        border_style |= curses.color_pair(Color.BORDER)
-        title_style |= curses.color_pair(Color.TITLE)
+    border_style = state
+    title_style = state
 
+    if has_color:
+        border_style = Color.BORDER | state
+        title_style = Color.TITLE | state
+
+    last_row = height - 1
+    last_col = width - 1
+
+    # Corners
     safe_addstr(window, 0, 0, "╭", border_style)
-    safe_addstr(window, 0, width - 1, "╮", border_style)
-    safe_addstr(window, height - 1, 0, "╰", border_style)
-    safe_addstr(window, height - 1, width - 1, "╯", border_style)
+    safe_addstr(window, 0, last_col, "╮", border_style)
+    safe_addstr(window, last_row, 0, "╰", border_style)
+    safe_addstr(window, last_row, last_col, "╯", border_style)
 
+    # Top / Bottom borders
     if width > 2:
         horizontal = "─" * (width - 2)
+
         safe_addstr(window, 0, 1, horizontal, border_style)
-        safe_addstr(window, height - 1, 1, horizontal, border_style)
+        safe_addstr(window, last_row, 1, horizontal, border_style)
 
-    for row in range(1, height - 1):
+    # Side borders
+    for row in range(1, last_row):
         safe_addstr(window, row, 0, "│", border_style)
-        safe_addstr(window, row, width - 1, "│", border_style)
+        safe_addstr(window, row, last_col, "│", border_style)
 
-    safe_addstr(window, 0, 2, title[: max(width - 4, 0)], title_style)
+    # Title
+    if width > 4:
+        safe_addstr(
+            window,
+            0,
+            2,
+            title[: width - 4],
+            title_style,
+        )
     
 
 def can_run_tui() -> bool:
